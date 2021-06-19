@@ -1,57 +1,48 @@
 # challenge project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+### Pre-requisites
+JDK 11
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+### Technologies Used
+- Quarkus as core framework (JAX-RS for creating rest endpoints)
+- Jackson (for JSON marshalling/unmarshalling)
+- Lombok (for generating builder and immutable classes)
+- Microprofile (rest-client, health)
+- JIB (for generating docker images)
+- Junit5 (Testing framework)
+- Mockito (Mocking during testing)
+- Wiremock (Mock server used for integration tests)
 
-## Running the application in dev mode
+### Testing the application
+You can run all the application tests (unit and integration) using:
+```shell script
+./gradlew test
+```
+When Integration tests run wiremock is used as mockserver to provide backend api responses 
 
+### Running the application in dev mode
 You can run your application in dev mode that enables live coding using:
 ```shell script
 ./gradlew quarkusDev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
-
-## Packaging and running the application
-
+### Packaging and running the application
 The application can be packaged using:
 ```shell script
 ./gradlew build
 ```
 It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
-```
 
 The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
 
-## Creating a native executable
-
-You can create a native executable using: 
+### Packaging the application as docker image
+This step requires docker to be running.  The application can be packaged as docker container using:
 ```shell script
-./gradlew build -Dquarkus.package.type=native
+./gradlew clean build -Dquarkus.container-image.build=true
+docker images
 ```
+on successful completion the docker image in the loaded on docker and can be run.
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/challenge-0.0.1-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
-
-## Related guides
-
-
-## Provided examples
-
-### RESTEasy JSON serialisation using Jackson
-
-This example demonstrate RESTEasy JSON serialisation by letting you list, add and remove quark types from a list. Quarked!
-
-[Related guide section...](https://quarkus.io/guides/rest-json#creating-your-first-json-rest-service)
+### Additional endpoints
+- Health endpoint (http://localhost:8080/q/health) is available for health checks
+- OpenAPI 3.0 (http://localhost:8080/q/openapi) - Generated swagger specs for the application
