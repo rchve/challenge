@@ -1,6 +1,6 @@
 package dev.rg.pokemon.clients;
 
-import dev.rg.pokemon.clients.models.Pokemon;
+import dev.rg.pokemon.clients.models.PokemonSpecies;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 public interface PokemonRestClient {
 
     @GET
-    @Path("/pokemon/{name}")
+    @Path("/pokemon-species/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    Pokemon pokemon(@PathParam String name);
+    PokemonSpecies pokemon(@PathParam String name);
 }

@@ -20,7 +20,7 @@ public class WiremockPokemon implements QuarkusTestResourceLifecycleManager {
         wireMockServer = new WireMockServer();
         wireMockServer.start();
         try {
-            stubFor(get(urlEqualTo("/api/v2/pokemon/ditto")).willReturn(
+            stubFor(get(urlEqualTo("/api/v2/pokemon-species/ditto")).willReturn(
                     aResponse().withHeader("Content-Type", "application/json")
                             .withBody(Files.readString(Path.of("", "src/test/resources/pokemon/ditto.json")))
             ));

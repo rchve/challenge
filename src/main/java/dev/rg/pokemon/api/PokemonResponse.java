@@ -7,4 +7,7 @@ import lombok.Getter;
 @Getter
 class PokemonResponse {
     private final String name;
+    private final String species;
+    private final Boolean isLegendary;
+    private final String description;
 }

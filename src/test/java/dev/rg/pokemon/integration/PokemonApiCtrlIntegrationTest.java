@@ -5,6 +5,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 
 @QuarkusTest
@@ -15,6 +16,9 @@ class PokemonApiCtrlIntegrationTest {
     void testPokemonDitto() {
         given().when().get("/pokemon/ditto")
                 .then().statusCode(200)
-                .body("name", is("ditto"));
+                .body("name", is("ditto"),
+                        "species", is("ditto"),
+                        "description", containsString("It can freely recombine its own cellular structure to"),
+                        "isLegendary", is(false));
     }
 }

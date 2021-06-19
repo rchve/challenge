@@ -1,7 +1,8 @@
 package dev.rg.pokemon.api;
 
 import dev.rg.pokemon.clients.PokemonRestClient;
-import dev.rg.pokemon.clients.models.Pokemon;
+import dev.rg.pokemon.clients.models.PokemonSpecies;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.ws.rs.GET;
@@ -23,12 +24,17 @@ public class PokemonApiCtrl {
     @GET
     @Path("/{name}")
     public PokemonResponse info(@PathParam("name") String name) {
-        final Pokemon pokemon = pokemonClient.pokemon(name);
+        final var pokemon = pokemonClient.pokemon(name);
         return buildResponse(pokemon);
     }
 
-    private PokemonResponse buildResponse(final Pokemon pokemon) {
-        return PokemonResponse.builder()
-                .name(pokemon.getName()).build();
+    private PokemonResponse buildResponse(final PokemonSpecies pokemon) {
+        final PokemonResponse.PokemonResponseBuilder builder = PokemonResponse.builder()
+                .name(pokemon.getName())
+                .species(pokemon.getName())
+                .isLegendary(pokemon.isLegendary());
+        pokemon.getFlavorTextEntries().stream().filter(p -> StringUtils.equals("en", p.getLanguage().getName())).findFirst()
+                .ifPresent(v -> builder.description(v.getFlavorText()));
+        return builder.build();
     }
 }
