@@ -23,7 +23,7 @@ public class PokemonApiCtrl {
 
     @GET
     @Path("/{name}")
-    public PokemonResponse info(@PathParam("name") String name) {
+    public PokemonResponse pokemon(@PathParam("name") String name) {
         final var pokemon = pokemonClient.pokemon(name);
         return buildResponse(pokemon);
     }
