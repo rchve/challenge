@@ -13,6 +13,5 @@ ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jb
 
 COPY --from=builder /usr/src/app/build/challenge-*-runner.jar /work/
 EXPOSE 8080
-USER 1001
 
 ENTRYPOINT [ "java", "-jar", "/work/challenge-*-runner.jar" ]
