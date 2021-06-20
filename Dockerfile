@@ -6,7 +6,7 @@ COPY . .
 RUN gradle --no-daemon clean build -x test
 
 ## Stage 2 Build image using openjdk
-FROM openjdk:11.0.11-jdk
+FROM openjdk:11.0.11-jdk-slim
 WORKDIR /work/
 # Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"

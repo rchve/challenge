@@ -18,7 +18,8 @@ You can run all the application tests (unit and integration) using:
 ```shell script
 ./gradlew test
 ```
-When Integration tests run wiremock is used as mockserver to provide backend api responses 
+All tests run using the Junit5 frameworks.
+Integration tests run with wiremock used as mockserver to provide mocked backend api responses 
 
 ### Running the application in dev mode
 You can run your application in dev mode that enables live coding using:
