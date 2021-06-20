@@ -26,6 +26,11 @@ You can run your application in dev mode that enables live coding using:
 ```shell script
 ./gradlew quarkusDev
 ```
+The application will be accessible at port 8080
+```shell
+curl http://localhost:8080/pokemon/ditto
+curl http://localhost:8080/pokemon/translated/ditto
+```
 
 ### Packaging and running the application
 The application can be packaged using:
