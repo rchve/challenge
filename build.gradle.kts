@@ -20,6 +20,7 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-health")
     implementation("io.quarkus:quarkus-container-image-jib")
     implementation("org.projectlombok:lombok:1.18.20")
+    implementation("com.google.flogger:flogger-slf4j-backend:0.6")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.quarkus:quarkus-junit5-mockito")

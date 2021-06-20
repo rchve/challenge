@@ -21,4 +21,14 @@ class PokemonApiCtrlIntegrationTest {
                         "description", containsString("It can freely recombine its own cellular structure to"),
                         "isLegendary", is(false));
     }
+
+    @Test
+    void testPokemonDittoTranslated() {
+        given().when().get("/pokemon/translated/ditto")
+                .then().statusCode(200)
+                .body("name", is("ditto"),
+                        "habitat", is("urban"),
+                        "description", containsString("Lost a planet,  master obiwan has."),
+                        "isLegendary", is(false));
+    }
 }

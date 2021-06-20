@@ -30,4 +30,16 @@ public class PokemonApiCtrl {
                 .build();
     }
 
+    @GET
+    @Path("/translated/{name}")
+    public PokemonResponse translatedPokemon(@PathParam("name") String name) {
+        final var pokemon = pokemonService.translatedPokemon(name);
+        return PokemonResponse.builder()
+                .name(pokemon.getPokemon().getName())
+                .isLegendary(pokemon.getPokemon().isLegendary())
+                .description(pokemon.getTranslatedDescription())
+                .habitat(pokemon.getHabitat())
+                .build();
+    }
+
 }

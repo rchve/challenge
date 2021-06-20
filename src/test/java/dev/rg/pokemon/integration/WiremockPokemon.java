@@ -6,7 +6,6 @@ import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -24,10 +23,14 @@ public class WiremockPokemon implements QuarkusTestResourceLifecycleManager {
                     aResponse().withHeader("Content-Type", "application/json")
                             .withBody(Files.readString(Path.of("", "src/test/resources/pokemon/ditto.json")))
             ));
+            stubFor(get(urlPathMatching("/translate/.*\\.json")).willReturn(
+                    aResponse().withHeader("Content-Type", "application/json")
+                            .withBody(Files.readString(Path.of("", "src/test/resources/translation/translate.json")))
+            ));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return Collections.singletonMap("pokemon-api/mp-rest/url", wireMockServer.baseUrl());
+        return Map.of("pokemon-api/mp-rest/url", wireMockServer.baseUrl(), "translation-api/mp-rest/url", wireMockServer.baseUrl());
     }
 
     @Override
