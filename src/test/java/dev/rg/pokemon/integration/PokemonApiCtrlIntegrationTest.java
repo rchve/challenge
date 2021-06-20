@@ -17,7 +17,7 @@ class PokemonApiCtrlIntegrationTest {
         given().when().get("/pokemon/ditto")
                 .then().statusCode(200)
                 .body("name", is("ditto"),
-                        "species", is("ditto"),
+                        "habitat", is("urban"),
                         "description", containsString("It can freely recombine its own cellular structure to"),
                         "isLegendary", is(false));
     }

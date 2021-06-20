@@ -23,11 +23,12 @@ class PokemonApiCtrlTest {
     @Test
     void testPokemonDitto() {
         Mockito.when(client.pokemon("ditto")).thenReturn(PokemonSpecies.builder().name("ditto")
-                .isLegendary(false).flavorTextEntries(Lists.newArrayList()).build());
+                .isLegendary(false).flavorTextEntries(Lists.newArrayList())
+                .habitat(PokemonSpecies.Habitat.builder().name("urban").build()).build());
         given().when().get("/pokemon/ditto")
                 .then().statusCode(200)
                 .body("name", is("ditto"),
-                        "species", is("ditto"),
+                        "habitat", is("urban"),
                         "description", nullValue(),
                         "isLegendary", is(false));
     }

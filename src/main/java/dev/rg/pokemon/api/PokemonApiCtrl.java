@@ -31,8 +31,10 @@ public class PokemonApiCtrl {
     private PokemonResponse buildResponse(final PokemonSpecies pokemon) {
         final PokemonResponse.PokemonResponseBuilder builder = PokemonResponse.builder()
                 .name(pokemon.getName())
-                .species(pokemon.getName())
                 .isLegendary(pokemon.isLegendary());
+        if (pokemon.getHabitat() != null) {
+            builder.habitat(pokemon.getHabitat().getName());
+        }
         pokemon.getFlavorTextEntries().stream().filter(p -> StringUtils.equals("en", p.getLanguage().getName())).findFirst()
                 .ifPresent(v -> builder.description(v.getFlavorText()));
         return builder.build();

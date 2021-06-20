@@ -20,9 +20,21 @@ public class PokemonSpecies {
     private final boolean isLegendary;
     @JsonProperty("flavor_text_entries")
     private final List<FlavorTextEntries> flavorTextEntries;
+    private final Habitat habitat;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static class PokemonSpeciesBuilder {}
+
+    @Builder
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonDeserialize(builder = Habitat.HabitatBuilder.class)
+    public static class Habitat {
+        private final String name;
+
+        @JsonPOJOBuilder(withPrefix = "")
+        public static class HabitatBuilder {}
+    }
 
     @Builder
     @Getter
