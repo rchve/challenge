@@ -1,36 +1,45 @@
 package dev.rg.pokemon.api;
 
 import com.google.common.collect.Lists;
-import dev.rg.pokemon.clients.PokemonRestClient;
 import dev.rg.pokemon.clients.models.PokemonSpecies;
-import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
+import dev.rg.pokemon.exception.ApplicationException;
+import dev.rg.pokemon.service.PokemonData;
+import dev.rg.pokemon.service.PokemonService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-@QuarkusTest
 class PokemonApiCtrlTest {
 
-    @InjectMock
-    @RestClient
-    PokemonRestClient client;
+    private PokemonApiCtrl subject;
+    private PokemonService pokemonService;
+
+    @BeforeEach
+    void setup() {
+        pokemonService = Mockito.mock(PokemonService.class);
+        subject = new PokemonApiCtrl(pokemonService);
+    }
 
     @Test
     void testPokemonDitto() {
-        Mockito.when(client.pokemon("ditto")).thenReturn(PokemonSpecies.builder().name("ditto")
-                .isLegendary(false).flavorTextEntries(Lists.newArrayList())
-                .habitat(PokemonSpecies.Habitat.builder().name("urban").build()).build());
-        given().when().get("/pokemon/ditto")
-                .then().statusCode(200)
-                .body("name", is("ditto"),
-                        "habitat", is("urban"),
-                        "description", nullValue(),
-                        "isLegendary", is(false));
+        when(pokemonService.pokemon("ditto")).thenReturn(
+                new PokemonData(PokemonSpecies.builder().name("ditto")
+                        .isLegendary(false).flavorTextEntries(Lists.newArrayList())
+                        .habitat(PokemonSpecies.Habitat.builder().name("urban").build()).build()));
+
+        final var result = subject.pokemon("ditto");
+
+        assertEquals("ditto", result.getName());
+    }
+
+    @Test
+    void testPokemonWithBackendApiError() {
+        when(pokemonService.pokemon("ditto")).thenThrow(new RuntimeException());
+        Assertions.assertThrows(ApplicationException.class, () -> subject.pokemon("ditto"));
     }
 
 }

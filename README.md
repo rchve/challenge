@@ -32,6 +32,8 @@ curl http://localhost:8080/pokemon/ditto
 curl http://localhost:8080/pokemon/translated/ditto
 ```
 
+In case of error response is returned as json with message containing the exception message.
+
 ### Packaging and running the application
 The application can be packaged using:
 ```shell script
